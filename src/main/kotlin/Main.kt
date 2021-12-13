@@ -1,59 +1,29 @@
-import java.util.*
-val repeticiones: Int = 5
-fun ordenarBurbuja(listaNumeros: List<Int>): List<Int>{
-
-    var contador1 = 0
-    var contador2 = 1
-
-    while (listaNumeros != listaNumeros.sortedByDescending { it }.reversed() )
-    {
-        if (listaNumeros[contador1] > listaNumeros[contador2])
-        {
-            Collections.swap(listaNumeros,contador1,contador2)
-            contador1++
-            contador2++
-            when
-            {
-                contador2 == listaNumeros.size ->
-                {
-                    contador1 = 0
-                    contador2= 1 }
-            }
-        }
-        else{
-            contador1++
-            contador2++
-            when
-            {
-                contador2 == listaNumeros.size ->
-                {
-                    contador1 = 0
-                    contador2= 1 }
-            }
-        }
-    }
-    return listaNumeros
-}
-
-
 fun main() {
+    println("Introduzca la lista de números que desee ordenar (sólo números enteros y separados por comas): ")
+    val input = readLine()
+    val splitList = input?.split(",", ignoreCase = true, limit = 0)
+    val numList: MutableList<Int> = mutableListOf()
 
-    val listaNumeros = mutableListOf<Int>()
-    var numeroInput: Int = 0
+    splitList?.forEach { numList.add(it.toInt()) }
 
+    var cambio = true
 
-    println("Introduce $repeticiones números")
+    while(cambio) {
+        cambio = false
 
-    repeat(repeticiones) {
-        numeroInput = readLine()?.toInt()!!
-        listaNumeros.add(numeroInput)
+        for(i in 0 until numList.size-1){
+            if(numList[i] > numList[i+1]){
+                val temp = numList[i]
+                numList[i] = numList[i+1]
+                numList[i + 1] = temp
+
+                cambio = true
+            }
+        }
     }
 
-    println(listaNumeros)
+    val numListReversed: MutableList<Int> = numList.asReversed()
 
-    println("")
-    println("Ordenado según el método de ordenación burbuja")
-    println("")
-
-    println(ordenarBurbuja(listaNumeros))
+    println("Aquí tenemos la lista ordenada de menor a mayor: $numList")
+    println("Aquí tenemos la lista ordenada de mayor a menor: $numListReversed.")
 }
