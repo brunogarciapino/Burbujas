@@ -1,29 +1,28 @@
 fun main() {
-    println("Introduzca la lista de números que desee ordenar (sólo números enteros y separados por comas): ")
-    val input = readLine()
-    val splitList = input?.split(",", ignoreCase = true, limit = 0)
-    val numList: MutableList<Int> = mutableListOf()
-
-    splitList?.forEach { numList.add(it.toInt()) }
-
-    var cambio = true
-
-    while(cambio) {
-        cambio = false
-
-        for(i in 0 until numList.size-1){
-            if(numList[i] > numList[i+1]){
-                val temp = numList[i]
-                numList[i] = numList[i+1]
-                numList[i + 1] = temp
-
-                cambio = true
+    println("Introduce los numeros separados por comas.")
+    val listaInput= readLine()?.split(',', ignoreCase = false, limit = 0)
+    val listaMutable= mutableListOf<Int>()
+    try {
+        listaInput?.forEach { listaMutable.add(it.toInt())}
+    }catch (_:Exception){ println("Solo se puede intoducir numeros")}
+    listaMutable.sortedByDescending { it }
+    println(listaMutable)
+    println("Tu lista actualmente es $listaMutable")
+    println("Tu lista ordenada de menor a mayor es: ${burbuja(listaMutable)}")
+    val listaalreves: MutableList<Int> = listaMutable.asReversed()
+    println("La lista ordenada de mayor a menor es: $listaalreves")
+}
+fun burbuja(lista: MutableList<Int>):List<Int>{
+    var x: Int
+    for(i in 0 until lista.size-1){
+        for(j in 0 until lista.size-1){
+            if(lista[j]>lista[j+1]){
+                x=lista[j]
+                lista[j]=lista[j+1]
+                lista[j+1]=x
             }
         }
+
     }
-
-    val numListReversed: MutableList<Int> = numList.asReversed()
-
-    println("Aquí tenemos la lista ordenada de menor a mayor: $numList")
-    println("Aquí tenemos la lista ordenada de mayor a menor: $numListReversed.")
+    return lista.toList()
 }
